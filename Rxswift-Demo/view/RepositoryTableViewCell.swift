@@ -17,7 +17,6 @@ class RepositoryTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-       
         // Configure the view for the selected state
     }
 
@@ -30,19 +29,4 @@ class RepositoryTableViewCell: UITableViewCell {
     }
 }
 
-extension UIImageView {
-    func load(url: URL ,completion: @escaping (_ image: UIImage?) -> Void) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    
-                        self?.image = image
-                        completion(image)
-                        return
-               
-                }
-            }
-            completion(nil)
-        }
-    }
-}
+

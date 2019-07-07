@@ -20,17 +20,21 @@ class GithubRepositoriesViewController: UIViewController, UITableViewDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupBinding()
+    }
+ 
+    private func setupBinding() {
         searchBar.rx.text
-                .orEmpty
+            .orEmpty
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-                .distinctUntilChanged()
+            .distinctUntilChanged()
             .subscribe(onNext: { query in
                 if query.isEmpty {
                     self.viewModel.removeAllRepositories()
                 }else{
                     self.viewModel.search(query: query)
                 }
-            
+                
             }, onError: { error in
                 print(error)
             }, onCompleted: {
@@ -45,10 +49,9 @@ class GithubRepositoriesViewController: UIViewController, UITableViewDelegate{
         
         tableView.rx.modelSelected(Repository.self)
             .subscribe(onNext: { repository in
-                UIApplication.shared.open(repository.html_url, options:  [:], completionHandler: nil)  
+                UIApplication.shared.open(repository.html_url, options:  [:], completionHandler: nil)
             })
             .disposed(by: disposeBag)
     }
- 
 }
 
