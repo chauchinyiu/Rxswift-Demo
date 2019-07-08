@@ -43,7 +43,7 @@ class GithubRepositoriesViewController: UIViewController, UITableViewDelegate{
                 print("on disposed")
             })
         
-        viewModel.repositories.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: "RepositoryTableViewCell", cellType: RepositoryTableViewCell.self)) { index, model, cell in
+        viewModel.repositories.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { index, model, cell in
             cell.setupCell(model: model )
         }.disposed(by: self.disposeBag)
         

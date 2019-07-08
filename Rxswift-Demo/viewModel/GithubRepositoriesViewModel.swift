@@ -23,7 +23,7 @@ class GithubRepositoriesViewModel: NSObject {
                 onNext: { [weak self] repositories in
                     self?.repositories.accept(repositories)
                 },
-                onError: { [weak self] error in
+                onError: { error in
                     print(error)
                 }
         )
