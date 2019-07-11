@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 class GithubRepositoriesViewController: UIViewController, UITableViewDelegate{
     
@@ -24,28 +23,25 @@ class GithubRepositoriesViewController: UIViewController, UITableViewDelegate{
     }
  
     private func setupBinding() {
+       
         searchBar.rx.text
             .orEmpty
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { query in
-                if query.isEmpty {
-                    self.viewModel.removeAllRepositories()
-                }else{
-                    self.viewModel.search(query: query)
-                }
-                
+                  self.viewModel.search(query: query)
             }, onError: { error in
                 print(error)
             }, onCompleted: {
                 print("done")
             }, onDisposed:  {
                 print("on disposed")
-            })
+            }).disposed(by: disposeBag)
+ 
         
         viewModel.repositories.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { index, model, cell in
             cell.setupCell(model: model )
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         tableView.rx.modelSelected(Repository.self)
             .subscribe(onNext: { repository in

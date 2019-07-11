@@ -11,13 +11,16 @@ import RxSwift
 import RxRelay
 import Foundation
 
-class GithubRepositoriesViewModel: NSObject {
+class GithubRepositoriesViewModel {
     let client = GithubServicesClient()
     let repositories : BehaviorRelay<[Repository]> = BehaviorRelay(value: [])
-    let updateImageInCell : BehaviorRelay<(Int, UIImage)?> = BehaviorRelay(value:nil)
     let disposeBag = DisposeBag()
 
-    func search(query:String ) {
+    func search(query:String) {
+        guard !query.isEmpty else {
+            self.repositories.accept([]);
+            return
+        }
         client.search(query: query)
             .subscribe(
                 onNext: { [weak self] repositories in
@@ -26,13 +29,9 @@ class GithubRepositoriesViewModel: NSObject {
                 onError: { error in
                     print(error)
                 }
-        )
+            )
             .disposed(by: disposeBag)
     }
-    
-    func removeAllRepositories() {
-        self.repositories.accept([]);
-    }
- 
+
 }
 

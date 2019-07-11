@@ -120,10 +120,10 @@
 		1F8C60CE22CF5699004477E0 /* Rxswift-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1F8C612022D1E7CE004477E0 /* serivces */,
 				1F8C611C22CFF687004477E0 /* view */,
 				1F8C611B22CFF3FC004477E0 /* viewModel */,
 				1F8C611922CF75AD004477E0 /* model */,
+				1F8C612022D1E7CE004477E0 /* serivces */,
 				1F8C60CF22CF5699004477E0 /* AppDelegate.swift */,
 				1F8C60D122CF5699004477E0 /* SceneDelegate.swift */,
 				1F8C60D522CF5699004477E0 /* Main.storyboard */,
